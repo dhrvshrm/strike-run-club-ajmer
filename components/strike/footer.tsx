@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Container, Typography, IconButton, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  IconButton,
+  Divider,
+  Grid2,
+} from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -27,9 +34,9 @@ export default function Footer() {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={6}>
+        <Grid2 container spacing={6}>
           {/* Brand */}
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid2 size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
               <DirectionsRunIcon color="primary" sx={{ fontSize: 32 }} />
               <Typography fontWeight={800} fontSize={22} color="text.primary">
@@ -40,9 +47,13 @@ export default function Footer() {
                 &nbsp;CLUB
               </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2, maxWidth: 280 }}>
-              Ajmer&apos;s premier running community. Join us for weekly runs, events, and a supportive
-              community of runners.
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mb: 2, maxWidth: 280 }}
+            >
+              Ajmer&apos;s premier running community. Join us for weekly runs,
+              events, and a supportive community of runners.
             </Typography>
             <Box>
               <IconButton
@@ -79,10 +90,10 @@ export default function Footer() {
                 <TwitterIcon />
               </IconButton>
             </Box>
-          </Grid>
+          </Grid2>
 
           {/* Quick Links */}
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography fontWeight={700} sx={{ mb: 2 }}>
               Quick Links
             </Typography>
@@ -104,10 +115,10 @@ export default function Footer() {
                 </Typography>
               ))}
             </Box>
-          </Grid>
+          </Grid2>
 
           {/* Contact Info */}
-          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography fontWeight={700} sx={{ mb: 2 }}>
               Contact
             </Typography>
@@ -120,13 +131,19 @@ export default function Footer() {
             <Typography variant="body2" color="text.secondary">
               +91 98765 43210
             </Typography>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
 
         <Divider sx={{ my: 4 }} />
 
-        <Typography variant="caption" color="text.secondary" align="center" display="block">
-          &copy; {new Date().getFullYear()} Strike Run Club. All rights reserved.
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          align="center"
+          display="block"
+        >
+          &copy; {new Date().getFullYear()} Strike Run Club. All rights
+          reserved.
         </Typography>
       </Container>
     </Box>

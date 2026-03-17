@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Container, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { STATS } from "@/lib/data";
@@ -57,9 +57,9 @@ export default function StatsSection() {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4} justifyContent="center">
+        <Grid2 container spacing={4} justifyContent="center">
           {STATS.map((s, i) => (
-            <Grid key={s.label} size={{ xs: 6, md: 3 }}>
+            <Grid2 key={s.label} size={{ xs: 6, md: 3 }}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -82,14 +82,18 @@ export default function StatsSection() {
                   }}
                 >
                   <Counter target={s.value} suffix={s.suffix} />
-                  <Typography variant="body1" color="text.secondary" sx={{ mt: 1, fontWeight: 500 }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ mt: 1, fontWeight: 500 }}
+                  >
                     {s.label}
                   </Typography>
                 </Box>
               </motion.div>
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </Container>
     </Box>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Tabs, Tab, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import EventCard from "./event-card";
@@ -70,14 +70,18 @@ export default function EventsTabs({
                 <Typography variant="h6" color="text.secondary">
                   No upcoming events at the moment.
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 1 }}
+                >
                   Check back soon or follow us on social media for updates!
                 </Typography>
               </Box>
             ) : (
-              <Grid container spacing={3}>
+              <Grid2 container spacing={3}>
                 {upcoming.map((event, i) => (
-                  <Grid key={event.id} size={{ xs: 12, sm: 6, lg: 4 }}>
+                  <Grid2 key={event.id} size={{ xs: 12, sm: 6, lg: 4 }}>
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -85,9 +89,9 @@ export default function EventsTabs({
                     >
                       <EventCard event={event} />
                     </motion.div>
-                  </Grid>
+                  </Grid2>
                 ))}
-              </Grid>
+              </Grid2>
             )}
           </TabPanel>
 
@@ -99,9 +103,9 @@ export default function EventsTabs({
                 </Typography>
               </Box>
             ) : (
-              <Grid container spacing={3}>
+              <Grid2 container spacing={3}>
                 {past.map((event, i) => (
-                  <Grid key={event.id} size={{ xs: 12, sm: 6, lg: 4 }}>
+                  <Grid2 key={event.id} size={{ xs: 12, sm: 6, lg: 4 }}>
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -109,9 +113,9 @@ export default function EventsTabs({
                     >
                       <EventCard event={event} isPast />
                     </motion.div>
-                  </Grid>
+                  </Grid2>
                 ))}
-              </Grid>
+              </Grid2>
             )}
           </TabPanel>
         </motion.div>

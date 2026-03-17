@@ -2,7 +2,7 @@
 
 import { use } from "react";
 import { Container, Typography, Box, Button, Paper, Chip } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -14,7 +14,11 @@ import { getEventById } from "@/lib/data";
 import CountdownTimer from "@/components/strike/countdown-timer";
 import { notFound } from "next/navigation";
 
-export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default function EventDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params);
   const event = getEventById(id);
 
@@ -56,9 +60,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
           </Button>
         </motion.div>
 
-        <Grid container spacing={4}>
+        <Grid2 container spacing={4}>
           {/* Main Content */}
-          <Grid size={{ xs: 12, md: 8 }}>
+          <Grid2 size={{ xs: 12, md: 8 }}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -90,7 +94,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                     <Typography variant="h3" fontWeight={800}>
                       {format(new Date(event.date), "dd")}
                     </Typography>
-                    <Typography variant="h6">{format(new Date(event.date), "MMMM yyyy")}</Typography>
+                    <Typography variant="h6">
+                      {format(new Date(event.date), "MMMM yyyy")}
+                    </Typography>
                   </Box>
                   <Chip
                     label={isPast ? "Past Event" : "Upcoming"}
@@ -111,7 +117,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                     {event.title}
                   </Typography>
 
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, mb: 4 }}>
+                  <Box
+                    sx={{ display: "flex", flexWrap: "wrap", gap: 3, mb: 4 }}
+                  >
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <CalendarMonthIcon sx={{ color: "primary.main" }} />
                       <Typography color="text.secondary">
@@ -126,23 +134,37 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <LocationOnIcon sx={{ color: "primary.main" }} />
-                      <Typography color="text.secondary">{event.location}</Typography>
+                      <Typography color="text.secondary">
+                        {event.location}
+                      </Typography>
                     </Box>
                   </Box>
 
                   <Typography variant="h6" fontWeight={600} sx={{ mb: 2 }}>
                     About This Event
                   </Typography>
-                  <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, mb: 3 }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ lineHeight: 1.8, mb: 3 }}
+                  >
                     {event.description}
                   </Typography>
 
                   {event.recap && (
                     <>
-                      <Typography variant="h6" fontWeight={600} sx={{ mb: 2, mt: 4 }}>
+                      <Typography
+                        variant="h6"
+                        fontWeight={600}
+                        sx={{ mb: 2, mt: 4 }}
+                      >
                         Event Recap
                       </Typography>
-                      <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 }}>
+                      <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        sx={{ lineHeight: 1.8 }}
+                      >
                         {event.recap}
                       </Typography>
                     </>
@@ -150,10 +172,10 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 </Box>
               </Paper>
             </motion.div>
-          </Grid>
+          </Grid2>
 
           {/* Sidebar */}
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid2 size={{ xs: 12, md: 4 }}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -192,7 +214,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
                   <LocationOnIcon sx={{ color: "primary.main", mt: 0.5 }} />
-                  <Typography color="text.secondary">{event.location}</Typography>
+                  <Typography color="text.secondary">
+                    {event.location}
+                  </Typography>
                 </Box>
               </Paper>
 
@@ -210,8 +234,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 </Button>
               )}
             </motion.div>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </Container>
     </Box>
   );

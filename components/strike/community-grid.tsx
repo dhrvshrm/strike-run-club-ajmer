@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Container, Typography, Button } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -42,7 +42,12 @@ export default function CommunityGrid() {
           <Box sx={{ textAlign: "center", mb: 6 }}>
             <Typography
               variant="overline"
-              sx={{ color: "primary.main", letterSpacing: 3, mb: 1, display: "block" }}
+              sx={{
+                color: "primary.main",
+                letterSpacing: 3,
+                mb: 1,
+                display: "block",
+              }}
             >
               OUR COMMUNITY
             </Typography>
@@ -54,15 +59,16 @@ export default function CommunityGrid() {
               color="text.secondary"
               sx={{ maxWidth: 600, mx: "auto", lineHeight: 1.7 }}
             >
-              We&apos;re a family of passionate runners, supporting each other through every mile.
-              From beginners to marathoners, everyone is welcome.
+              We&apos;re a family of passionate runners, supporting each other
+              through every mile. From beginners to marathoners, everyone is
+              welcome.
             </Typography>
           </Box>
         </motion.div>
 
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {COMMUNITY_IMAGES.map((img, i) => (
-            <Grid key={i} size={{ xs: 6, md: img.span === 2 ? 6 : 3 }}>
+            <Grid2 key={i} size={{ xs: 6, md: img.span === 2 ? 6 : 3 }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -73,7 +79,11 @@ export default function CommunityGrid() {
                 <Box
                   sx={{
                     position: "relative",
-                    height: { xs: 150, sm: 200, md: img.span === 2 ? 280 : 280 },
+                    height: {
+                      xs: 150,
+                      sm: 200,
+                      md: img.span === 2 ? 280 : 280,
+                    },
                     borderRadius: 3,
                     overflow: "hidden",
                     "&:hover img": {
@@ -101,9 +111,9 @@ export default function CommunityGrid() {
                   />
                 </Box>
               </motion.div>
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -11,7 +11,7 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -67,7 +67,9 @@ export default function ContactPage() {
     sev: "success" as "success" | "error",
   });
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
@@ -121,16 +123,20 @@ export default function ContactPage() {
             <Typography variant="h2" fontWeight={700} sx={{ mb: 2 }}>
               Contact Us
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 600, mx: "auto" }}>
-              Have questions about joining or want to learn more about our events? We&apos;d love to
-              hear from you!
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ maxWidth: 600, mx: "auto" }}
+            >
+              Have questions about joining or want to learn more about our
+              events? We&apos;d love to hear from you!
             </Typography>
           </Box>
         </motion.div>
 
-        <Grid container spacing={6}>
+        <Grid2 container spacing={6}>
           {/* Contact Info */}
-          <Grid size={{ xs: 12, md: 5 }}>
+          <Grid2 size={{ xs: 12, md: 5 }}>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -151,8 +157,14 @@ export default function ContactPage() {
                     <Paper
                       component="a"
                       href={info.href}
-                      target={info.href.startsWith("http") ? "_blank" : undefined}
-                      rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      target={
+                        info.href.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        info.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                       elevation={0}
                       sx={{
                         p: 2.5,
@@ -188,7 +200,11 @@ export default function ContactPage() {
                         <Typography variant="caption" color="text.secondary">
                           {info.label}
                         </Typography>
-                        <Typography variant="body1" fontWeight={500} color="text.primary">
+                        <Typography
+                          variant="body1"
+                          fontWeight={500}
+                          color="text.primary"
+                        >
                           {info.value}
                         </Typography>
                       </Box>
@@ -197,10 +213,10 @@ export default function ContactPage() {
                 ))}
               </Box>
             </motion.div>
-          </Grid>
+          </Grid2>
 
           {/* Contact Form */}
-          <Grid size={{ xs: 12, md: 7 }}>
+          <Grid2 size={{ xs: 12, md: 7 }}>
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -224,8 +240,8 @@ export default function ContactPage() {
                   onSubmit={handleSubmit}
                   sx={{ display: "flex", flexDirection: "column", gap: 3 }}
                 >
-                  <Grid container spacing={2}>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                  <Grid2 container spacing={2}>
+                    <Grid2 size={{ xs: 12, sm: 6 }}>
                       <TextField
                         name="name"
                         label="Your Name"
@@ -237,8 +253,8 @@ export default function ContactPage() {
                           input: { sx: { borderRadius: 2 } },
                         }}
                       />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6 }}>
                       <TextField
                         name="email"
                         label="Email Address"
@@ -251,8 +267,8 @@ export default function ContactPage() {
                           input: { sx: { borderRadius: 2 } },
                         }}
                       />
-                    </Grid>
-                  </Grid>
+                    </Grid2>
+                  </Grid2>
 
                   <TextField
                     name="subject"
@@ -287,13 +303,17 @@ export default function ContactPage() {
                     disabled={loading}
                     sx={{ py: 1.5, alignSelf: "flex-start", px: 5 }}
                   >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : "Send Message"}
+                    {loading ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </Box>
               </Paper>
             </motion.div>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </Container>
 
       <Snackbar

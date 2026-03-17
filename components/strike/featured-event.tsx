@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Container, Typography, Button, Paper } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid2 from "@mui/material/Grid2";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { motion } from "framer-motion";
@@ -30,7 +30,12 @@ export default function FeaturedEvent({ event }: { event: Event }) {
         >
           <Typography
             variant="overline"
-            sx={{ color: "primary.main", letterSpacing: 3, mb: 1, display: "block" }}
+            sx={{
+              color: "primary.main",
+              letterSpacing: 3,
+              mb: 1,
+              display: "block",
+            }}
           >
             NEXT EVENT
           </Typography>
@@ -54,13 +59,14 @@ export default function FeaturedEvent({ event }: { event: Event }) {
               borderRadius: 4,
             }}
           >
-            <Grid container>
+            <Grid2 container>
               {/* Gradient side / image placeholder */}
-              <Grid
+              <Grid2
                 size={{ xs: 12, md: 5 }}
                 sx={{
                   minHeight: { xs: 200, md: 400 },
-                  background: "linear-gradient(135deg, #FF5722 0%, #E64A19 50%, #1A1A2E 100%)",
+                  background:
+                    "linear-gradient(135deg, #FF5722 0%, #E64A19 50%, #1A1A2E 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -75,35 +81,66 @@ export default function FeaturedEvent({ event }: { event: Event }) {
                     {format(new Date(event.date), "MMMM yyyy")}
                   </Typography>
                 </Box>
-              </Grid>
+              </Grid2>
 
               {/* Content */}
-              <Grid size={{ xs: 12, md: 7 }}>
+              <Grid2 size={{ xs: 12, md: 7 }}>
                 <Box sx={{ p: { xs: 3, md: 5 } }}>
                   <Typography variant="h4" fontWeight={700} gutterBottom>
                     {event.title}
                   </Typography>
 
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-                    <CalendarMonthIcon fontSize="small" sx={{ color: "primary.main" }} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 1,
+                    }}
+                  >
+                    <CalendarMonthIcon
+                      fontSize="small"
+                      sx={{ color: "primary.main" }}
+                    />
                     <Typography variant="body1" color="text.secondary">
-                      {format(new Date(event.date), "EEEE, dd MMMM yyyy • h:mm a")}
+                      {format(
+                        new Date(event.date),
+                        "EEEE, dd MMMM yyyy • h:mm a",
+                      )}
                     </Typography>
                   </Box>
 
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
-                    <LocationOnIcon fontSize="small" sx={{ color: "primary.main" }} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 3,
+                    }}
+                  >
+                    <LocationOnIcon
+                      fontSize="small"
+                      sx={{ color: "primary.main" }}
+                    />
                     <Typography variant="body1" color="text.secondary">
                       {event.location}
                     </Typography>
                   </Box>
 
-                  <Typography variant="body1" color="text.secondary" sx={{ mb: 4, lineHeight: 1.7 }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ mb: 4, lineHeight: 1.7 }}
+                  >
                     {event.description}
                   </Typography>
 
                   <Box sx={{ mb: 4 }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ mb: 2 }}
+                    >
                       Event starts in:
                     </Typography>
                     <CountdownTimer targetDate={event.date} />
@@ -120,8 +157,8 @@ export default function FeaturedEvent({ event }: { event: Event }) {
                     View Details
                   </Button>
                 </Box>
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </Paper>
         </motion.div>
       </Container>

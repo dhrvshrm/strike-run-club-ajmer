@@ -24,7 +24,9 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const filteredImages =
-    category === "All" ? GALLERY_IMAGES : GALLERY_IMAGES.filter((i) => i.category === category);
+    category === "All"
+      ? GALLERY_IMAGES
+      : GALLERY_IMAGES.filter((i) => i.category === category);
 
   const handleCategoryChange = useCallback(
     (_: React.MouseEvent<HTMLElement>, newCategory: string | null) => {
@@ -32,7 +34,7 @@ export default function GalleryPage() {
         setCategory(newCategory);
       }
     },
-    []
+    [],
   );
 
   return (
@@ -58,9 +60,14 @@ export default function GalleryPage() {
           <Typography variant="h2" fontWeight={700} sx={{ mb: 1 }}>
             Gallery
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 5, maxWidth: 600 }}>
-            Moments captured from our runs, events, and community gatherings. Every photo tells a
-            story of shared passion and achievement.
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 5, maxWidth: 600 }}
+          >
+            Moments captured from our runs, events, and community gatherings.
+            Every photo tells a story of shared passion and achievement in our
+            running journey together.
           </Typography>
         </motion.div>
 
@@ -141,7 +148,10 @@ export default function GalleryPage() {
               }}
             >
               {filteredImages.map((img, i) => (
-                <ImageListItem key={i} onClick={() => setSelectedImage(img.src)}>
+                <ImageListItem
+                  key={i}
+                  onClick={() => setSelectedImage(img.src)}
+                >
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}

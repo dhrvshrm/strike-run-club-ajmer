@@ -23,8 +23,8 @@ const CONTACT_INFO = [
   {
     icon: EmailIcon,
     label: "Email",
-    value: "hello@strikerunclub.com",
-    href: "mailto:hello@strikerunclub.com",
+    value: "strikerunclub@gmail.com",
+    href: "mailto:strikerunclub@gmail.com",
   },
   {
     icon: PhoneIcon,

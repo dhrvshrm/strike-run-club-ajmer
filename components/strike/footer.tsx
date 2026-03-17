@@ -1,17 +1,15 @@
 "use client";
 
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import {
   Box,
   Container,
-  Typography,
-  IconButton,
   Divider,
   Grid2,
+  IconButton,
+  Typography,
 } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import Link from "next/link";
 
 const QUICK_LINKS = [
@@ -57,7 +55,7 @@ export default function Footer() {
             </Typography>
             <Box>
               <IconButton
-                href="https://instagram.com"
+                href="https://www.instagram.com/strikerunclub/"
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
@@ -67,8 +65,8 @@ export default function Footer() {
               >
                 <InstagramIcon />
               </IconButton>
-              <IconButton
-                href="https://facebook.com"
+              {/* <IconButton
+                href="https://strava.com/clubs/strikerunclub"
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
@@ -76,19 +74,8 @@ export default function Footer() {
                   "&:hover": { color: "primary.main" },
                 }}
               >
-                <FacebookIcon />
-              </IconButton>
-              <IconButton
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  color: "text.secondary",
-                  "&:hover": { color: "primary.main" },
-                }}
-              >
-                <TwitterIcon />
-              </IconButton>
+                <StravaIcon />
+              </IconButton> */}
             </Box>
           </Grid2>
 
@@ -126,7 +113,7 @@ export default function Footer() {
               Ajmer, Rajasthan, India
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              hello@strikerunclub.com
+              strikerunclub@gmail.com
             </Typography>
             <Typography variant="body2" color="text.secondary">
               +91 98765 43210
@@ -144,6 +131,14 @@ export default function Footer() {
         >
           &copy; {new Date().getFullYear()} Strike Run Club. All rights
           reserved.
+        </Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          align="center"
+          display="block"
+        >
+          Made with ❤️ in Ajmer. Designed by Dhruv Sharma.
         </Typography>
       </Container>
     </Box>

@@ -37,28 +37,22 @@ const VALUES = [
 
 const TEAM = [
   {
-    name: "Rahul Sharma",
-    role: "Founder & Head Coach",
+    name: "Rahul Chhaparwal",
+    role: "Founder and Head Coach",
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
   },
   {
-    name: "Priya Patel",
-    role: "Events Coordinator",
+    name: "Shubham Gupta",
+    role: "Co-Founder and Community Lead",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face",
   },
   {
-    name: "Amit Kumar",
-    role: "Training Lead",
+    name: "Dhruv Sharma",
+    role: "Event Coordinator and Technical Lead",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
-  },
-  {
-    name: "Sneha Gupta",
-    role: "Community Manager",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
   },
 ];
 
@@ -101,7 +95,7 @@ export default function AboutPage() {
                 color="text.secondary"
                 sx={{ lineHeight: 1.8, maxWidth: 700, mx: "auto" }}
               >
-                Founded in 2020, Strike Run Club began as a small group of
+                Founded in 2025, Strike Run Club began as a small group of
                 running enthusiasts in Ajmer who wanted to share their passion
                 for running. What started as weekend jogs around Ana Sagar Lake
                 has grown into Ajmer&apos;s most vibrant running community,

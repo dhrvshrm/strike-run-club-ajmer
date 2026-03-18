@@ -28,7 +28,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-import { getUpcomingEvents, type Registration } from "@/lib/data";
+import type { Registration, Event } from "@/lib/data";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -48,7 +48,9 @@ const LEVEL_COLOR: Record<string, "success" | "warning" | "error"> = {
   Advanced: "error",
 };
 
-const CATEGORIES = ["Runs", "Events", "Community"] as const;
+const GALLERY_CATEGORIES = ["Runs", "Events", "Community"] as const;
+
+const EMPTY_EVENT = { title: "", description: "", date: "", location: "", recap: "" };
 
 export default function AdminPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
@@ -59,6 +61,9 @@ export default function AdminPage() {
   const [uploadCategory, setUploadCategory] = useState("");
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [newEvent, setNewEvent] = useState(EMPTY_EVENT);
+  const [savingEvent, setSavingEvent] = useState(false);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -68,12 +73,14 @@ export default function AdminPage() {
   };
 
   const loadData = async () => {
-    const [regRes, galleryRes] = await Promise.all([
+    const [regRes, galleryRes, eventsRes] = await Promise.all([
       fetch("/api/registrations"),
       fetch("/api/gallery"),
+      fetch("/api/events"),
     ]);
     if (regRes.ok) setRegistrations(await regRes.json());
     if (galleryRes.ok) setGalleryImages(await galleryRes.json());
+    if (eventsRes.ok) setEvents(await eventsRes.json());
   };
 
   useEffect(() => {
@@ -105,7 +112,7 @@ export default function AdminPage() {
     setGalleryImages((prev) => prev.filter((img) => img.id !== id));
   };
 
-  const upcomingEvents = getUpcomingEvents();
+  const upcomingCount = events.filter((e) => new Date(e.date) >= new Date()).length;
 
   const stats = [
     {
@@ -116,7 +123,7 @@ export default function AdminPage() {
     },
     {
       label: "Upcoming Events",
-      value: upcomingEvents.length,
+      value: upcomingCount,
       icon: EventIcon,
       color: "#25D366",
     },
@@ -170,7 +177,7 @@ export default function AdminPage() {
               </Typography>
               <Typography color="text.secondary" sx={{ mb: 4 }}>
                 {registrations.length} registrations &middot;{" "}
-                {upcomingEvents.length} upcoming events
+                {upcomingCount} upcoming events
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 1 }}>
@@ -392,7 +399,7 @@ export default function AdminPage() {
                   size="small"
                   sx={{ minWidth: 160 }}
                 >
-                  {CATEGORIES.map((c) => (
+                  {GALLERY_CATEGORIES.map((c) => (
                     <MenuItem key={c} value={c}>{c}</MenuItem>
                   ))}
                 </TextField>
@@ -457,6 +464,157 @@ export default function AdminPage() {
                 </Box>
               ))}
             </Box>
+          )}
+        </motion.div>
+
+        {/* Events Management */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <Typography variant="h5" fontWeight={600} sx={{ mt: 8, mb: 3 }}>
+            Events
+          </Typography>
+
+          <Paper
+            elevation={0}
+            sx={{ p: 4, border: "1px solid", borderColor: "divider", borderRadius: 3, mb: 4 }}
+          >
+            <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 3 }}>
+              Add New Event
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                <TextField
+                  label="Title"
+                  value={newEvent.title}
+                  onChange={(e) => setNewEvent((p) => ({ ...p, title: e.target.value }))}
+                  size="small"
+                  sx={{ flex: 1, minWidth: 200 }}
+                />
+                <TextField
+                  label="Location"
+                  value={newEvent.location}
+                  onChange={(e) => setNewEvent((p) => ({ ...p, location: e.target.value }))}
+                  size="small"
+                  sx={{ flex: 1, minWidth: 200 }}
+                />
+                <TextField
+                  label="Date & Time"
+                  type="datetime-local"
+                  value={newEvent.date}
+                  onChange={(e) => setNewEvent((p) => ({ ...p, date: e.target.value }))}
+                  size="small"
+                  slotProps={{ inputLabel: { shrink: true } }}
+                  sx={{ minWidth: 220 }}
+                />
+              </Box>
+              <TextField
+                label="Description"
+                value={newEvent.description}
+                onChange={(e) => setNewEvent((p) => ({ ...p, description: e.target.value }))}
+                size="small"
+                multiline
+                rows={2}
+                fullWidth
+              />
+              <TextField
+                label="Recap (optional, for past events)"
+                value={newEvent.recap}
+                onChange={(e) => setNewEvent((p) => ({ ...p, recap: e.target.value }))}
+                size="small"
+                multiline
+                rows={2}
+                fullWidth
+              />
+              <Button
+                variant="contained"
+                sx={{ alignSelf: "flex-start", borderRadius: 2 }}
+                disabled={savingEvent || !newEvent.title || !newEvent.date || !newEvent.location || !newEvent.description}
+                onClick={async () => {
+                  setSavingEvent(true);
+                  const res = await fetch("/api/events", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      title: newEvent.title,
+                      description: newEvent.description,
+                      date: new Date(newEvent.date).toISOString(),
+                      location: newEvent.location,
+                      recap: newEvent.recap || null,
+                    }),
+                  });
+                  if (res.ok) {
+                    const created = await res.json();
+                    setEvents((prev) => [created, ...prev]);
+                    setNewEvent(EMPTY_EVENT);
+                  }
+                  setSavingEvent(false);
+                }}
+              >
+                {savingEvent ? "Saving…" : "Add Event"}
+              </Button>
+            </Box>
+          </Paper>
+
+          {events.length === 0 ? (
+            <Paper
+              elevation={0}
+              sx={{ p: 6, border: "1px solid", borderColor: "divider", borderRadius: 3, textAlign: "center" }}
+            >
+              <Typography color="text.secondary">No events yet.</Typography>
+            </Paper>
+          ) : (
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{ border: "1px solid", borderColor: "divider", borderRadius: 3 }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ "& th": { fontWeight: 700, bgcolor: "background.default", borderColor: "divider" } }}>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Location</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {events.map((ev) => {
+                    const isPast = new Date(ev.date) < new Date();
+                    return (
+                      <TableRow key={ev.id} hover sx={{ "&:last-child td": { borderBottom: 0 } }}>
+                        <TableCell sx={{ fontWeight: 500 }}>{ev.title}</TableCell>
+                        <TableCell>{format(new Date(ev.date), "dd MMM yyyy, h:mm a")}</TableCell>
+                        <TableCell>{ev.location}</TableCell>
+                        <TableCell>
+                          <Chip
+                            label={isPast ? "Past" : "Upcoming"}
+                            size="small"
+                            color={isPast ? "default" : "success"}
+                            sx={{ fontWeight: 500 }}
+                          />
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            size="small"
+                            color="error"
+                            onClick={async () => {
+                              await fetch(`/api/events/${ev.id}`, { method: "DELETE" });
+                              setEvents((prev) => prev.filter((e) => e.id !== ev.id));
+                            }}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
           )}
         </motion.div>
       </Container>

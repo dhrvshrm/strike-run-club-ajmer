@@ -3,11 +3,23 @@
 import { Container, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import EventsTabs from "@/components/strike/events-tabs";
-import { getUpcomingEvents, getPastEvents } from "@/lib/data";
+import { type Event } from "@/lib/data";
+import { useEffect, useState } from "react";
 
 export default function EventsPage() {
-  const upcoming = getUpcomingEvents();
-  const past = getPastEvents();
+  const [upcoming, setUpcoming] = useState<Event[]>([]);
+  const [past, setPast] = useState<Event[]>([]);
+
+  useEffect(() => {
+    fetch("/api/events")
+      .then((r) => r.json())
+      .then((events: Event[]) => {
+        const now = new Date();
+        setUpcoming(events.filter((e) => new Date(e.date) >= now));
+        setPast(events.filter((e) => new Date(e.date) < now).reverse());
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <Box

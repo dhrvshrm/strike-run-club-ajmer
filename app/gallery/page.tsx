@@ -12,21 +12,33 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { GALLERY_IMAGES } from "@/lib/data";
+
+export type GalleryImage = {
+  id: string;
+  src: string;
+  alt: string;
+  category: string;
+};
 
 const CATEGORIES = ["All", "Runs", "Events", "Community"] as const;
 
 export default function GalleryPage() {
+  const [images, setImages] = useState<GalleryImage[]>([]);
   const [category, setCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  useEffect(() => {
+    fetch("/api/gallery")
+      .then((r) => r.json())
+      .then(setImages)
+      .catch(() => {});
+  }, []);
+
   const filteredImages =
-    category === "All"
-      ? GALLERY_IMAGES
-      : GALLERY_IMAGES.filter((i) => i.category === category);
+    category === "All" ? images : images.filter((i) => i.category === category);
 
   const handleCategoryChange = useCallback(
     (_: React.MouseEvent<HTMLElement>, newCategory: string | null) => {
@@ -149,7 +161,7 @@ export default function GalleryPage() {
             >
               {filteredImages.map((img, i) => (
                 <ImageListItem
-                  key={i}
+                  key={img.id ?? i}
                   onClick={() => setSelectedImage(img.src)}
                 >
                   <motion.div

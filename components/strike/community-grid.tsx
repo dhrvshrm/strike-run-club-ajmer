@@ -5,31 +5,19 @@ import Grid2 from "@mui/material/Grid2";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-
-const COMMUNITY_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&h=400&fit=crop",
-    alt: "Morning run group",
-    span: 2,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=400&h=400&fit=crop",
-    alt: "Trail running",
-    span: 1,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&h=400&fit=crop",
-    alt: "Team celebration",
-    span: 1,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600&h=400&fit=crop",
-    alt: "Running in nature",
-    span: 2,
-  },
-];
+import { useEffect, useState } from "react";
+import { GalleryImage } from "@/lib/data";
 
 export default function CommunityGrid() {
+  const [images, setImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    fetch("/api/gallery")
+      .then((r) => r.json())
+      .then(setImages)
+      .catch(() => {});
+  }, []);
+
   return (
     <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.default" }}>
       <Container maxWidth="lg">
@@ -67,7 +55,7 @@ export default function CommunityGrid() {
         </motion.div>
 
         <Grid2 container spacing={2}>
-          {COMMUNITY_IMAGES.map((img, i) => (
+          {images.map((img, i) => (
             <Grid2 key={i} size={{ xs: 6, md: img.span === 2 ? 6 : 3 }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

@@ -20,6 +20,7 @@ export type Registration = {
 };
 
 export type GalleryImage = {
+  span?: number;
   src: string;
   category: "Runs" | "Events" | "Community";
   alt: string;

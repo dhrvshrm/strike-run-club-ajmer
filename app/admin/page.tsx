@@ -23,13 +23,16 @@ import PeopleIcon from "@mui/icons-material/People";
 import EventIcon from "@mui/icons-material/Event";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { getUpcomingEvents, type Registration } from "@/lib/data";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { createSupabaseBrowserClient } from "@/lib/supabase-browser";
 
 type GalleryImage = {
   id: string;
@@ -56,6 +59,13 @@ export default function AdminPage() {
   const [uploadCategory, setUploadCategory] = useState("");
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const supabase = createSupabaseBrowserClient();
+    await supabase.auth.signOut();
+    router.push("/admin/login");
+  };
 
   const loadData = async () => {
     const [regRes, galleryRes] = await Promise.all([
@@ -163,23 +173,29 @@ export default function AdminPage() {
                 {upcomingEvents.length} upcoming events
               </Typography>
             </Box>
-            <Button
-              startIcon={<RefreshIcon />}
-              onClick={loadData}
-              variant="outlined"
-              sx={{
-                borderColor: "divider",
-                color: "text.secondary",
-                "&:hover": {
-                  borderColor: "primary.main",
-                  color: "primary.main",
-                  transform: "none",
-                  boxShadow: "none",
-                },
-              }}
-            >
-              Refresh
-            </Button>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Button
+                startIcon={<RefreshIcon />}
+                onClick={loadData}
+                variant="outlined"
+                sx={{
+                  borderColor: "divider",
+                  color: "text.secondary",
+                  "&:hover": { borderColor: "primary.main", color: "primary.main", transform: "none", boxShadow: "none" },
+                }}
+              >
+                Refresh
+              </Button>
+              <Button
+                startIcon={<LogoutIcon />}
+                onClick={handleLogout}
+                variant="outlined"
+                color="error"
+                sx={{ "&:hover": { transform: "none", boxShadow: "none" } }}
+              >
+                Logout
+              </Button>
+            </Box>
           </Box>
         </motion.div>
 

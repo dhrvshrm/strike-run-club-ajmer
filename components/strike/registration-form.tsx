@@ -98,6 +98,10 @@ export default function RegistrationForm() {
         }),
       });
 
+      if (res.status === 409) {
+        const body = await res.json();
+        throw new Error(body.error);
+      }
       if (!res.ok) throw new Error("Failed to register");
 
       setSnack({
@@ -106,10 +110,10 @@ export default function RegistrationForm() {
         sev: "success",
       });
       setForm({ name: "", email: "", phone: "", level: "" });
-    } catch {
+    } catch (err) {
       setSnack({
         open: true,
-        msg: "Something went wrong. Please try again.",
+        msg: err instanceof Error ? err.message : "Something went wrong. Please try again.",
         sev: "error",
       });
     } finally {

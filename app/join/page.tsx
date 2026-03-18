@@ -2,8 +2,12 @@
 
 import { Container, Typography, Box } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import GroupsIcon from "@mui/icons-material/Groups";
+import Image from "next/image";
+
+function LogoIcon() {
+  return <Image src="/logo.jpg" alt="Logo" width={24} height={24} style={{ borderRadius: 4 }} />;
+}
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { motion } from "framer-motion";
@@ -11,7 +15,7 @@ import RegistrationForm from "@/components/strike/registration-form";
 
 const BENEFITS = [
   {
-    icon: DirectionsRunIcon,
+    icon: LogoIcon,
     title: "Weekly Group Runs",
     description:
       "Join our regular morning and evening runs across Ajmer's scenic routes.",

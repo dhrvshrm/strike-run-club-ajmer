@@ -2,15 +2,19 @@
 
 import { Container, Typography, Box, Paper, Avatar } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Image from "next/image";
+
+function LogoIcon() {
+  return <Image src="/logo.jpg" alt="Logo" width={28} height={28} style={{ borderRadius: 4 }} />;
+}
 import GroupsIcon from "@mui/icons-material/Groups";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { motion } from "framer-motion";
 
 const VALUES = [
   {
-    icon: DirectionsRunIcon,
+    icon: LogoIcon,
     title: "Passion for Running",
     description:
       "We believe running is more than exercise - it's a way of life that transforms body and mind.",
@@ -168,9 +172,7 @@ export default function AboutPage() {
                   justifyContent: "center",
                 }}
               >
-                <DirectionsRunIcon
-                  sx={{ fontSize: 120, color: "rgba(255,255,255,0.3)" }}
-                />
+                <Image src="/logo.jpg" alt="Strike Run Club" width={120} height={120} style={{ borderRadius: 16, opacity: 0.85 }} />
               </Box>
             </motion.div>
           </Grid2>

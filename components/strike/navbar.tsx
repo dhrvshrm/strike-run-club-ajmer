@@ -14,12 +14,12 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
+import Image from "next/image";
 import { useColorMode } from "@/lib/color-mode-context";
 import { useState } from "react";
 
@@ -75,11 +75,17 @@ export default function Navbar() {
               textDecoration: "none",
             }}
           >
-            <DirectionsRunIcon color="primary" sx={{ fontSize: 28 }} />
+            <Image
+              src="/logo.jpg"
+              alt="Strike Run Club"
+              width={36}
+              height={36}
+              style={{ borderRadius: 6 }}
+            />
             <Typography fontWeight={800} fontSize={20} color="text.primary">
               STRIKE
-              <Box component="span" sx={{ color: "primary.main" }}>
-                RUN
+              <Box component="span" sx={{ color: "text.primary" }}>
+                RUNCLUB
               </Box>
             </Typography>
           </Box>

@@ -1,7 +1,7 @@
 "use client";
 
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Image from "next/image";
 import {
   Box,
   Container,
@@ -36,7 +36,7 @@ export default function Footer() {
           {/* Brand */}
           <Grid2 size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-              <DirectionsRunIcon color="primary" sx={{ fontSize: 32 }} />
+              <Image src="/logo.jpg" alt="Strike Run Club" width={40} height={40} style={{ borderRadius: 8 }} />
               <Typography fontWeight={800} fontSize={22} color="text.primary">
                 STRIKE
                 <Box component="span" sx={{ color: "primary.main" }}>

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { addRegistration } from "@/lib/data";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"] as const;
 
@@ -87,16 +86,19 @@ export default function RegistrationForm() {
 
     setLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
-      addRegistration({
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        experienceLevel: form.level as "Beginner" | "Intermediate" | "Advanced",
+      const res = await fetch("/api/registrations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          experienceLevel: form.level,
+        }),
       });
+
+      if (!res.ok) throw new Error("Failed to register");
 
       setSnack({
         open: true,

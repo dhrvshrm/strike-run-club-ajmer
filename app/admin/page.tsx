@@ -12,7 +12,6 @@ import {
   TableHead,
   TableRow,
   Chip,
-  Alert,
   Button,
 } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
@@ -22,11 +21,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-import {
-  getRegistrations,
-  getUpcomingEvents,
-  type Registration,
-} from "@/lib/data";
+import { getUpcomingEvents, type Registration } from "@/lib/data";
 import { useEffect, useState } from "react";
 
 const LEVEL_COLOR: Record<string, "success" | "warning" | "error"> = {
@@ -39,13 +34,17 @@ export default function AdminPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [mounted, setMounted] = useState(false);
 
-  const loadData = () => {
-    setRegistrations(getRegistrations());
+  const loadData = async () => {
+    const res = await fetch("/api/registrations");
+    if (res.ok) {
+      const data = await res.json();
+      setRegistrations(data);
+    }
   };
 
   useEffect(() => {
     setMounted(true);
-    loadData();
+    void loadData();
   }, []);
 
   const upcomingEvents = getUpcomingEvents();
@@ -135,11 +134,6 @@ export default function AdminPage() {
             </Button>
           </Box>
         </motion.div>
-
-        <Alert severity="info" sx={{ mb: 4, borderRadius: 2 }}>
-          This is a demo dashboard using localStorage. In production, connect a
-          database for persistent storage.
-        </Alert>
 
         {/* Stat cards */}
         <Grid2 container spacing={3} sx={{ mb: 6 }}>

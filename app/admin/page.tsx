@@ -25,6 +25,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -64,6 +65,8 @@ export default function AdminPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [newEvent, setNewEvent] = useState(EMPTY_EVENT);
   const [savingEvent, setSavingEvent] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<(typeof EMPTY_EVENT & { id: string }) | null>(null);
+  const [savingEdit, setSavingEdit] = useState(false);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -558,6 +561,98 @@ export default function AdminPage() {
             </Box>
           </Paper>
 
+          {editingEvent && (
+            <Paper
+              elevation={0}
+              sx={{ p: 4, border: "1px solid", borderColor: "primary.main", borderRadius: 3, mb: 4 }}
+            >
+              <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 3 }}>
+                Edit Event
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                  <TextField
+                    label="Title"
+                    value={editingEvent.title}
+                    onChange={(e) => setEditingEvent((p) => p && ({ ...p, title: e.target.value }))}
+                    size="small"
+                    sx={{ flex: 1, minWidth: 200 }}
+                  />
+                  <TextField
+                    label="Location"
+                    value={editingEvent.location}
+                    onChange={(e) => setEditingEvent((p) => p && ({ ...p, location: e.target.value }))}
+                    size="small"
+                    sx={{ flex: 1, minWidth: 200 }}
+                  />
+                  <TextField
+                    label="Date & Time"
+                    type="datetime-local"
+                    value={editingEvent.date}
+                    onChange={(e) => setEditingEvent((p) => p && ({ ...p, date: e.target.value }))}
+                    size="small"
+                    slotProps={{ inputLabel: { shrink: true } }}
+                    sx={{ minWidth: 220 }}
+                  />
+                </Box>
+                <TextField
+                  label="Description"
+                  value={editingEvent.description}
+                  onChange={(e) => setEditingEvent((p) => p && ({ ...p, description: e.target.value }))}
+                  size="small"
+                  multiline
+                  rows={2}
+                  fullWidth
+                />
+                <TextField
+                  label="Recap (optional)"
+                  value={editingEvent.recap}
+                  onChange={(e) => setEditingEvent((p) => p && ({ ...p, recap: e.target.value }))}
+                  size="small"
+                  multiline
+                  rows={2}
+                  fullWidth
+                />
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Button
+                    variant="contained"
+                    sx={{ alignSelf: "flex-start", borderRadius: 2 }}
+                    disabled={savingEdit || !editingEvent.title || !editingEvent.date || !editingEvent.location || !editingEvent.description}
+                    onClick={async () => {
+                      setSavingEdit(true);
+                      const res = await fetch(`/api/events/${editingEvent.id}`, {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          title: editingEvent.title,
+                          description: editingEvent.description,
+                          date: new Date(editingEvent.date).toISOString(),
+                          location: editingEvent.location,
+                          recap: editingEvent.recap || null,
+                        }),
+                      });
+                      if (res.ok) {
+                        const updated = await res.json();
+                        setEvents((prev) => prev.map((e) => e.id === updated.id ? updated : e));
+                        setEditingEvent(null);
+                      }
+                      setSavingEdit(false);
+                    }}
+                  >
+                    {savingEdit ? "Saving…" : "Save Changes"}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ alignSelf: "flex-start", borderRadius: 2 }}
+                    onClick={() => setEditingEvent(null)}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Box>
+            </Paper>
+          )}
+
           {events.length === 0 ? (
             <Paper
               elevation={0}
@@ -597,7 +692,16 @@ export default function AdminPage() {
                             sx={{ fontWeight: 500 }}
                           />
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" sx={{ display: "flex", gap: 0.5, justifyContent: "flex-end" }}>
+                          <IconButton
+                            size="small"
+                            onClick={() => {
+                              const dateLocal = new Date(ev.date).toISOString().slice(0, 16);
+                              setEditingEvent({ id: ev.id, title: ev.title, description: ev.description, date: dateLocal, location: ev.location, recap: ev.recap ?? "" });
+                            }}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
                           <IconButton
                             size="small"
                             color="error"

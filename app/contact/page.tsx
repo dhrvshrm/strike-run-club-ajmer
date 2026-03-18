@@ -87,16 +87,30 @@ export default function ContactPage() {
 
     setLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    setSnack({
-      open: true,
-      msg: "Message sent! We'll get back to you soon.",
-      sev: "success",
-    });
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setLoading(false);
+      if (!res.ok) throw new Error();
+
+      setSnack({
+        open: true,
+        msg: "Message sent! We'll get back to you soon.",
+        sev: "success",
+      });
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setSnack({
+        open: true,
+        msg: "Something went wrong. Please try again.",
+        sev: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
